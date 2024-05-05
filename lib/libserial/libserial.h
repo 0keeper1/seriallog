@@ -6,7 +6,7 @@
 /** 
  * @brief enumerate for openSerialPort mode
  */
-typedef enum : u_int8_t
+typedef enum
 {
     READONLY = 00,
     WRITEONLY = 01,

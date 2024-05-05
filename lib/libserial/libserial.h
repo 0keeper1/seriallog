@@ -25,7 +25,7 @@ extern int openSerialPort(char *serialport, int baud, int mode);
 /**
  *  @brief read data from the serial port
  *  @param fd file descriptor
- *  @return line readed from the serial port
+ *  @return the line read from the serial ports
  */
 extern char *readSerialPort(int fd);
 

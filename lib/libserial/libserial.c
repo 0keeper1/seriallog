@@ -2,11 +2,10 @@
 #include <stdlib.h>
 #include <termio.h>
 #include <fcntl.h>
-#include <string.h>
 #include <asm-generic/termbits-common.h>
+#include <unistd.h>
 
-
-int baudRateToInteger(int baud)
+speed_t baudRateToInteger(int baud)
 {
     switch (baud)
     {
@@ -64,8 +63,8 @@ int setTermioAttr(int fd, struct termios *termio)
     termio->c_cflag &= ~PARENB;
     termio->c_cflag &= ~CSTOPB;
     termio->c_cflag &= ~CSIZE;
-    termio->c_cflag &= CS8;
-    termio->c_cflag |= CRTSCTS;
+    termio->c_cflag |= CS8;
+    termio->c_cflag &= CRTSCTS;
     termio->c_cflag |= CREAD | CLOCAL;
 
     termio->c_iflag &= ~(IXON | IXOFF | IXANY);
@@ -84,10 +83,10 @@ int setTermioAttr(int fd, struct termios *termio)
     return 0;
 }
 
-int openSerialPort(char *serialport, int baud, int mode)
+int openSerialPort(const char *serialport, int baud, int mode)
 {
     int fd;
-    int baudrange;
+    speed_t baudrange;
     struct termios termio;
 
     fd = open(serialport, mode, O_NOCTTY);
@@ -116,20 +115,13 @@ int openSerialPort(char *serialport, int baud, int mode)
 
 char *readSerialPort(int fd)
 {
-    int counter;
-    int readsize;
-    char buffer[1024];
+    ssize_t readsize;
+    static char buffer[1024];
 
     readsize = read(fd, buffer, 1024);
-
     if (readsize < 0)
     {
         return NULL;
-    }
-
-    if (buffer[1024] == '\r')
-    {
-        readsize += read(fd, &buffer[1024], 1);
     }
 
     buffer[readsize] = '\0';
@@ -138,7 +130,7 @@ char *readSerialPort(int fd)
 
 int writeSerialPort(int fd, char *buffer, size_t length)
 {
-    int writesize;
+    ssize_t writesize;
     writesize = write(fd, buffer, length);
     if (writesize < length)
     {

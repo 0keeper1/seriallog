@@ -20,7 +20,7 @@ typedef enum
  *  @param mode open the serial port mode (READONLY, WRITEONLY, READ/WRITE)
  *  @return [<0] failure [>=0] success
  */ 
-extern int openSerialPort(char *serialport, int baud, int mode);
+extern int openSerialPort(const char *serialport, int baud, int mode);
 
 /**
  *  @brief read data from the serial port

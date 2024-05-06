@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <termio.h>
 #include <fcntl.h>
@@ -58,7 +57,7 @@ speed_t baudRateToInteger(int baud)
     }
 }
 
-int setTermioAttr(int fd, struct termios *termio)
+int setTermioAttr(int fd, struct termios *const termio)
 {
     termio->c_cflag &= ~PARENB;
     termio->c_cflag &= ~CSTOPB;
@@ -132,7 +131,7 @@ int writeSerialPort(int fd, char *buffer, size_t length)
 {
     ssize_t writesize;
     writesize = write(fd, buffer, length);
-    if (writesize < length)
+    if (writesize < (ssize_t) length)
     {
         return -1;
     }

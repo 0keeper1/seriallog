@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "../lib/libserial/libserial.h"
 
+const char *HELP_CMD = "Usage: seriallog SERIALPORT BAUDRATE\n\nGithub: https://github.com/0keeper1/seriallog/";
+
 int main(int argc, char *argv[])
 {
     int fd;
@@ -9,6 +11,7 @@ int main(int argc, char *argv[])
 
     if (argc < 2)
     {
+        puts(HELP_CMD);
         return EXIT_FAILURE;
     }
     else if (argc < 3)

@@ -55,10 +55,17 @@ extern int validateSerialPort(const char *const serialport);
  */
 extern int validateBaudRate(const char *const baudrate);
 
+/**
+ * @brief flush the serial port
+ * @param fd file descriptor
+ * @return tcflush()
+ */
+extern int flushSerialPort(int fd);
+
 /** 
  * @brief close serial port
  * @param fd file descriptor
- * @return [<0] failure [>=0] success
+ * @return close()
  */ 
 extern int closeSerialPort(int fd);
 

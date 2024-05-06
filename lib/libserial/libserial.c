@@ -178,6 +178,11 @@ int validateSerialPort(const char *const serialport)
     return 0;
 }
 
+int flushSerialPort(int fd)
+{
+    return tcflush(fd, TCIOFLUSH);
+}
+
 int closeSerialPort(int fd)
 {
     return close(fd);

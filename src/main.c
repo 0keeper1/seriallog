@@ -6,8 +6,8 @@ const char *HELP_CMD = "Usage: seriallog SERIALPORT BAUDRATE\n\nGithub: https://
 int main(int argc, char *argv[])
 {
     int fd;
-    int baudrate; 
-    char *ptr;
+    int baudrate;
+    char buffer[1024];
 
     if (argc < 2)
     {
@@ -33,11 +33,10 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    do
+    while (readSerialPort(fd, buffer, 1024) != -1)
     {
-        ptr = readSerialPort(fd);
-        printf("%s", ptr);
-    } while (ptr != NULL);
+        printf("%s", buffer);
+    }
     
     if (closeSerialPort(fd) < 0)
     {

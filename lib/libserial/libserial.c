@@ -115,19 +115,18 @@ int openSerialPort(const char *serialport, int baud, int mode)
     return fd;
 }
 
-char *readSerialPort(int fd)
+int readSerialPort(int fd, char *const buffer, int buffercap)
 {
     ssize_t readsize;
-    static char buffer[1024];
 
-    readsize = read(fd, buffer, 1024);
+    readsize = read(fd, buffer, buffercap);
     if (readsize < 0)
     {
-        return NULL;
+        return -1;
     }
 
     buffer[readsize] = '\0';
-    return buffer;
+    return 0;
 }
 
 int writeSerialPort(int fd, char *buffer, size_t length)

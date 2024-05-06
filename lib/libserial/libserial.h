@@ -25,9 +25,11 @@ extern int openSerialPort(const char *serialport, int baud, int mode);
 /**
  *  @brief read data from the serial port
  *  @param fd file descriptor
+ *  @param buffer pointer to buffer
+ *  @param buffercap capacity of buffer
  *  @return the line read from the serial ports
  */
-extern char *readSerialPort(int fd);
+extern int readSerialPort(int fd, char *const buffer, int buffercap);
 
 /** 
  * @brief write buffer to serial port

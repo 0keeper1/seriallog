@@ -3,6 +3,9 @@
 #include <fcntl.h>
 #include <asm-generic/termbits-common.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <string.h>
+#include <ctype.h>
 
 speed_t baudRateToInteger(int baud)
 {
@@ -135,6 +138,44 @@ int writeSerialPort(int fd, char *buffer, size_t length)
     {
         return -1;
     }
+    return 0;
+}
+
+int validateBaudRate(const char *const baudrate)
+{
+    int c;
+    for (c = 0; c < strlen(baudrate); c++)
+    {
+        if (!isdigit(baudrate[c]))
+        {
+            return -1;
+        }
+    }
+    return 0;
+}
+
+int validateSerialPort(const char *const serialport)
+{
+    int fd;
+    struct stat serialpath;
+
+    if (stat(serialport, &serialpath) < 0)
+    {
+        return -1;
+    }
+    else if (S_ISREG(serialpath.st_mode))
+    {
+        return -1;
+    }
+    else if ((fd = open(serialport, O_RDONLY)) < 0)
+    {
+        return -1;
+    }
+    if (close(fd) < 0)
+    {
+        return -1;
+    }
+
     return 0;
 }
 

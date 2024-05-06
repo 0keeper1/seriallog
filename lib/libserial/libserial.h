@@ -38,6 +38,21 @@ extern char *readSerialPort(int fd);
  */
 extern int writeSerialPort(int fd, char *buffer, size_t length);
 
+
+/**
+ * @brief validate the serial port is openable and is valid path
+ * @param serialport takes the string name of the serial port "/dev/ttyUSB"
+ * @return [<0] failure [>=0] success
+ */
+extern int validateSerialPort(const char *const serialport);
+
+/**
+ * @brief validate baud rate string
+ * @param baudrate baud rate string
+ * @return [<0] failure [>=0] success
+ */
+extern int validateBaudRate(const char *const baudrate);
+
 /** 
  * @brief close serial port
  * @param fd file descriptor

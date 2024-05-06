@@ -30,7 +30,7 @@ speed_t baudRateToInteger(int baud)
     case 1800:
         return B1800;
     case 2400:
-        return B1800;
+        return B2400;
     case 4800:
         return B4800;
     case 9600:

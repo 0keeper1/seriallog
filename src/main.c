@@ -39,5 +39,10 @@ int main(int argc, char *argv[])
         printf("%s", ptr);
     } while (ptr != NULL);
     
+    if (closeSerialPort(fd) < 0)
+    {
+        return EXIT_FAILURE;
+    }
+
     return EXIT_SUCCESS;
 }

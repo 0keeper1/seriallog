@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     }
     baudrate = atoi(argv[2]);
 
-    if ((fd = openSerialPort(argv[1], baudrate, 02)) < 0)
+    if ((fd = openSerialPort(argv[1], baudrate, READONLY)) < 0)
     {
         return EXIT_FAILURE;
     }

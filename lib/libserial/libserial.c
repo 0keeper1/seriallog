@@ -143,7 +143,7 @@ int writeSerialPort(int fd, char *buffer, size_t length)
 
 int validateBaudRate(const char *const baudrate)
 {
-    int c;
+    size_t c;
     for (c = 0; c < strlen(baudrate); c++)
     {
         if (!isdigit(baudrate[c]))
@@ -179,7 +179,7 @@ int validateSerialPort(const char *const serialport)
     return 0;
 }
 
-inline int closeSerialPort(int fd)
+int closeSerialPort(int fd)
 {
     return close(fd);
 }

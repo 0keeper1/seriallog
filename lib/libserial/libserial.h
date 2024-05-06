@@ -58,6 +58,6 @@ extern int validateBaudRate(const char *const baudrate);
  * @param fd file descriptor
  * @return [<0] failure [>=0] success
  */ 
-extern inline int closeSerialPort(int fd);
+extern int closeSerialPort(int fd);
 
 #endif

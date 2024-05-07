@@ -210,6 +210,11 @@ int findSerialPortDevice(char *const serialport)
         }
     }
 
+    if (closedir(dirs) < 0)
+    {
+        return -1;
+    }
+
     return -1;
 }
 

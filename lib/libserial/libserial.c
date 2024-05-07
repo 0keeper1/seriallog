@@ -6,6 +6,7 @@
 #include <sys/stat.h>
 #include <string.h>
 #include <ctype.h>
+#include <dirent.h>
 
 speed_t baudRateToInteger(int baud)
 {
@@ -181,6 +182,35 @@ int validateSerialPort(const char *const serialport)
 int flushSerialPort(int fd)
 {
     return tcflush(fd, TCIOFLUSH);
+}
+
+int findSerialPortDevice(char *const serialport)
+{
+    DIR *dirs;
+    struct dirent *dir;
+
+    if ((dirs = opendir("/dev")) == NULL)
+    {
+        return -1;
+    }
+
+    while ((dir = readdir(dirs)) != NULL)
+    {
+        if (strncmp(dir->d_name, "ttyUSB", 6) == 0)
+        {
+            strcpy(serialport, "/dev/");
+            strcat(serialport, dir->d_name);
+            
+            if (closedir(dirs) < 0)
+            {
+                return -1;
+            }
+
+            return 0;
+        }
+    }
+
+    return -1;
 }
 
 int closeSerialPort(int fd)

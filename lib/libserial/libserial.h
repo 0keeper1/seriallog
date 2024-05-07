@@ -62,6 +62,13 @@ extern int validateBaudRate(const char *const baudrate);
  */
 extern int flushSerialPort(int fd);
 
+/**
+ * @brief searching in /dev directory to find serial ports 
+ * @param serialports pointer to string buffer
+ * @return [<0] failure [>=0] success
+ */
+extern int findSerialPortDevice(char *const serialport);
+
 /** 
  * @brief close serial port
  * @param fd file descriptor

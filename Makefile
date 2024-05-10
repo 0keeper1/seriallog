@@ -6,7 +6,7 @@ TARGET = main
 CFLAGS = -Wall -Wextra -std=c2x
 
 $(TARGET) :
-	$(CC) $(CFLAGS) -o $(BUILD)/seriallog $(SRC)/main.c $(LIB)/libserial/libserial.c
+	$(CC) $(CFLAGS) -o $(BUILD)/seriallog $(SRC)/main.c $(LIB)/libserial/libserial.c $(SRC)/cmdline.c
 
 clean :
 	rm ./build/seriallog

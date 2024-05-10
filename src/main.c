@@ -1,57 +1,57 @@
+#include "../lib/libserial/libserial.h"
+#include "cmdline.h"
 #include <stdio.h>
 #include <string.h>
-#include "../lib/libserial/libserial.h"
 
 #define VERSION "0.0.0"
 
-#define HELP "Usage: seriallog SERIALPORT BAUDRATE\n\nGithub: https://github.com/0keeper1/seriallog/"
+#define HELP                                                                                                                \
+    "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
+    "-r | --read\tOpen serialport in ReadOnly mode\n  -w | --write\tOpen serialport in WriteOnly mode\n  -rw | "            \
+    "--readwrie\tOpen serialport in ReadWrite mode\n  -h | --help\tDisplay this page\n  -v | --version\tDisplay the "       \
+    "version of this program\nGithub: https://github.com/0keeper1/seriallog/"
 
-int main(int argc, char *argv[])
+int main(int argc, const char *const argv[])
 {
     int fd;
     int baudrate;
+    short int mode = READONLY;
     char buffer[1024];
+    struct CommandLine cmdline;
 
-    if (argc < 2)
+    parseCmdLine(argc, argv, &cmdline);
+
+    if (cmdline.help)
     {
-        return EXIT_FAILURE;
+        puts(HELP);
+        return EXIT_SUCCESS;
     }
-    else if (argc < 3)
+    else if (cmdline.version)
     {
-        if (argv[1][0] == '-')
-        {
-            if (strncmp(argv[1], "-v", 2) == 0 || strncmp(argv[1], "--version", 9) == 0)
-            {
-                puts(VERSION);
-                return EXIT_SUCCESS;
-            }
-            else if (strncmp(argv[1], "-h", 2) == 0 || strncmp(argv[1], "--help", 9) == 0)
-            {
-                puts(HELP);
-                return EXIT_SUCCESS;
-            }
-            else
-            {
-                puts("Error: Invalid Flag.");
-                return EXIT_FAILURE;
-            }
-        }
-        puts("Error: Baud Rate required.");
-        return EXIT_FAILURE;
+        puts(VERSION);
+        return EXIT_SUCCESS;
     }
-    else if (validateSerialPort(argv[1]) < 0)
+
+    if (validateSerialPort(cmdline.serialport) < 0)
     {
         puts("Error: Invalid Serial Port.");
         return EXIT_FAILURE;
     }
-    else if (validateBaudRate(argv[2]) < 0)
-    {
-        puts("Error: Invalid Baud Rate.");
-        return EXIT_FAILURE;
-    }
-    baudrate = atoi(argv[2]);
 
-    if ((fd = openSerialPort(argv[1], baudrate, READONLY)) < 0)
+    switch (cmdline.mode)
+    {
+    case 'w':
+        mode = WRITEONLY;
+        break;
+    case 'r':
+        mode = READONLY;
+        break;
+    case 'a':
+        mode = READWRITE;
+        break;
+    }
+
+    if ((fd = openSerialPort(cmdline.serialport, cmdline.baudrate, mode)) < 0)
     {
         puts("Error: Failed to open Serial Port.");
         return EXIT_FAILURE;
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     {
         printf("%s", buffer);
     }
-    
+
     if (closeSerialPort(fd) < 0)
     {
         puts("Error: Failed to close Serial Port.");

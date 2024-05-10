@@ -1,12 +1,12 @@
-#include <stdlib.h>
-#include <termio.h>
-#include <fcntl.h>
 #include <asm-generic/termbits-common.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <string.h>
 #include <ctype.h>
 #include <dirent.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/stat.h>
+#include <termio.h>
+#include <unistd.h>
 
 speed_t baudRateToInteger(int baud)
 {
@@ -134,7 +134,7 @@ int writeSerialPort(int fd, char *buffer, size_t length)
 {
     ssize_t writesize;
     writesize = write(fd, buffer, length);
-    if (writesize < (ssize_t) length)
+    if (writesize < (ssize_t)length)
     {
         return -1;
     }
@@ -200,7 +200,7 @@ int findSerialPortDevice(char *const serialport)
         {
             strcpy(serialport, "/dev/");
             strcat(serialport, dir->d_name);
-            
+
             if (closedir(dirs) < 0)
             {
                 return -1;

@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-/** 
+/**
  * @brief enumerate for openSerialPort mode
  */
 typedef enum
@@ -19,7 +19,7 @@ typedef enum
  *  @param baud baud rate
  *  @param mode open the serial port mode (READONLY, WRITEONLY, READ/WRITE)
  *  @return [<0] failure [>=0] success
- */ 
+ */
 extern int openSerialPort(const char *serialport, int baud, int mode);
 
 /**
@@ -31,7 +31,7 @@ extern int openSerialPort(const char *serialport, int baud, int mode);
  */
 extern int readSerialPort(int fd, char *const buffer, int buffercap);
 
-/** 
+/**
  * @brief write buffer to serial port
  * @param fd file descriptor
  * @param buffer string buffer just allow the UTF-8 format
@@ -39,7 +39,6 @@ extern int readSerialPort(int fd, char *const buffer, int buffercap);
  * @return [<0] failure [>=0] success
  */
 extern int writeSerialPort(int fd, char *buffer, size_t length);
-
 
 /**
  * @brief validate the serial port is openable and is valid path
@@ -63,17 +62,17 @@ extern int validateBaudRate(const char *const baudrate);
 extern int flushSerialPort(int fd);
 
 /**
- * @brief searching in /dev directory to find serial ports 
+ * @brief searching in /dev directory to find serial ports
  * @param serialports pointer to string buffer
  * @return [<0] failure [>=0] success
  */
 extern int findSerialPortDevice(char *const serialport);
 
-/** 
+/**
  * @brief close serial port
  * @param fd file descriptor
  * @return close()
- */ 
+ */
 extern int closeSerialPort(int fd);
 
 #endif

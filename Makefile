@@ -3,10 +3,11 @@ SRC = ./src
 BUILD = ./build
 LIB = ./lib
 TARGET = main
-CFLAGS = -Wall -Wextra -std=c2x
+CFLAGS = -Wall -Wextra -std=c2x -Oz
 
 $(TARGET) :
-	$(CC) $(CFLAGS) -o $(BUILD)/seriallog $(SRC)/main.c $(LIB)/libserial/libserial.c $(SRC)/cmdline.c
+	mkdir -p build
+	$(CC) $(CFLAGS) -o $(BUILD)/seriallog $(SRC)/**.c $(LIB)/*/**.c
 
 clean :
 	rm ./build/seriallog

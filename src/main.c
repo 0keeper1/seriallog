@@ -7,14 +7,13 @@
 
 #define HELP                                                                                                                \
     "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
-    "-r | --read\tOpen serialport in ReadOnly mode\n  -w | --write\tOpen serialport in WriteOnly mode\n  -rw | "            \
-    "--readwrie\tOpen serialport in ReadWrite mode\n  -h | --help\tDisplay this page\n  -v | --version\tDisplay the "       \
+    "-m | --mode\tOpen serialport mode (r = ReadOnly, w = WroteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this page\n  " \
+    "-v | --version\tDisplay the "                                                                                          \
     "version of this program\nGithub: https://github.com/0keeper1/seriallog/"
 
 int main(int argc, const char *const argv[])
 {
     int fd;
-    int baudrate;
     short int mode = READONLY;
     char buffer[1024];
     struct CommandLine cmdline;

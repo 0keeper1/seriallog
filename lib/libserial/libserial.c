@@ -67,7 +67,6 @@ int setTermioAttr(int fd, struct termios *const termio)
     termio->c_cflag &= ~CSTOPB;
     termio->c_cflag &= ~CSIZE;
     termio->c_cflag |= CS8;
-    termio->c_cflag &= CRTSCTS;
     termio->c_cflag |= CREAD | CLOCAL;
 
     termio->c_iflag &= ~(IXON | IXOFF | IXANY);
@@ -79,7 +78,7 @@ int setTermioAttr(int fd, struct termios *const termio)
     termio->c_cc[VMIN] = 50;
     termio->c_cc[VTIME] = 1;
 
-    if (tcsetattr(fd, TCSANOW, &termio) < 0)
+    if (tcsetattr(fd, TCSANOW, termio) < 0)
     {
         return -1;
     }

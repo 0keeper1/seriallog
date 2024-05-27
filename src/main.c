@@ -1,9 +1,11 @@
 #include "../lib/libserial/libserial.h"
 #include "cmdline.h"
+#include "read.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
-#define VERSION "0.0.0"
+#define VERSION "1.0.0"
 
 #define HELP                                                                                                                \
     "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
@@ -15,7 +17,6 @@ int main(int argc, const char *const argv[])
 {
     int fd;
     short int mode = READONLY;
-    char buffer[1024];
     struct CommandLine cmdline;
 
     parseCmdLine(argc, argv, &cmdline);
@@ -56,10 +57,7 @@ int main(int argc, const char *const argv[])
         return EXIT_FAILURE;
     }
 
-    while (readSerialPort(fd, buffer, 1024) != -1)
-    {
-        printf("%s", buffer);
-    }
+    printToStdOut(fd, 1024);
 
     if (closeSerialPort(fd) < 0)
     {

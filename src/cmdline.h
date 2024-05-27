@@ -1,5 +1,4 @@
-#ifndef CMD_LINE
-#define CMD_LINE
+#pragma once
 
 struct CommandLine
 {
@@ -13,5 +12,3 @@ struct CommandLine
 };
 
 void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const cmdline);
-
-#endif

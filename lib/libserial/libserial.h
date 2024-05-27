@@ -1,5 +1,4 @@
-#ifndef LIB_SERIAL_PORT
-#define LIB_SERIAL_PORT
+#pragma once
 
 #include <stdlib.h>
 
@@ -74,5 +73,3 @@ extern int findSerialPortDevice(char *const serialport);
  * @return close()
  */
 extern int closeSerialPort(int fd);
-
-#endif

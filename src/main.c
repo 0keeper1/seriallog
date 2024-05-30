@@ -9,9 +9,11 @@
 
 #define HELP                                                                                                                \
     "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
-    "-m | --mode\tOpen serialport mode (r = ReadOnly, w = WroteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this page\n  " \
+    "-m | --mode <MODE>\tOpen serialport mode (r = ReadOnly, w = WroteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this "  \
+    "page\n  "                                                                                                              \
     "-v | --version\tDisplay the "                                                                                          \
-    "version of this program\nGithub: https://github.com/0keeper1/seriallog/"
+    "version of this program\n  -b | --buffersize <SIZE>\tBuffer size to hold the string data (default: 1024)\nGithub: "    \
+    "https://github.com/0keeper1/seriallog/"
 
 int main(int argc, const char *const argv[])
 {
@@ -57,7 +59,7 @@ int main(int argc, const char *const argv[])
         return EXIT_FAILURE;
     }
 
-    printToStdOut(fd, 1024);
+    printToStdOut(fd, cmdline.buffersize);
 
     if (closeSerialPort(fd) < 0)
     {

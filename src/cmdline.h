@@ -4,9 +4,9 @@ struct CommandLine
 {
     bool version;
     bool help;
-    bool tofile;
     unsigned char mode;
     int baudrate;
+    int buffersize;
     const char *serialport;
     const char *filepath;
 };

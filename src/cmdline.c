@@ -17,10 +17,10 @@ bool isFlag(const char *const argument)
 
 void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const cmdline)
 {
-    unsigned char pervflag = ' ';
     cmdline->help = false;
     cmdline->version = false;
-    cmdline->tofile = false;
+    cmdline->buffersize = 1024;
+    cmdline->filepath = NULL;
     cmdline->mode = 'r';
 
     for (int loopc = 1; loopc != argc; ++loopc)
@@ -37,34 +37,34 @@ void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const 
             }
             else if (checkFlag(argv[loopc], "-m", "--mode"))
             {
-                pervflag = 'm';
-                continue;
-            }
-            else if (checkFlag(argv[loopc], "-f", "--tofile"))
-            {
-                cmdline->tofile = true;
-                cmdline->filepath = isFlag(argv[argc > (loopc + 1) ? (loopc++) : loopc]) ? getcwd(NULL, 0) : argv[loopc];
-            }
-            pervflag = ' ';
-        }
-        else
-        {
-            if (pervflag == 'm')
-            {
-                if (strncmp(argv[loopc], "r", 2) == 0)
+                if (strncmp(argv[loopc + 1], "r", 2) == 0)
                 {
                     cmdline->mode = 'r';
                 }
-                else if (strncmp(argv[loopc], "w", 2) == 0)
+                else if (strncmp(argv[loopc + 1], "w", 2) == 0)
                 {
                     cmdline->mode = 'w';
                 }
-                else if (strncmp(argv[loopc], "rw", 3) == 0)
+                else if (strncmp(argv[loopc + 1], "rw", 3) == 0)
                 {
                     cmdline->mode = 'a';
                 }
+                loopc++;
             }
-            else if (argc - 1 == loopc)
+            else if (checkFlag(argv[loopc], "-b", "--buffersize"))
+            {
+                cmdline->buffersize = atoi(argv[loopc + 1]);
+                loopc++;
+            }
+            else if (checkFlag(argv[loopc], "-f", "--tofile"))
+            {
+                cmdline->filepath = argv[loopc + 1];
+                loopc++;
+            }
+        }
+        else
+        {
+            if (argc - 1 == loopc)
             {
                 cmdline->baudrate = atoi(argv[loopc]);
             }
@@ -72,7 +72,6 @@ void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const 
             {
                 cmdline->serialport = argv[loopc];
             }
-            pervflag = ' ';
         }
     }
 }

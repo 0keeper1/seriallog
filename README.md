@@ -29,4 +29,5 @@ seriallog -b 2042 -m r /dev/ttyUSB0 9600
 ```
 
 ```bash
-seriallog -b 2042 AUTO
+seriallog -b 2042 AUTO 9600
+```

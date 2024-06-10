@@ -14,6 +14,16 @@ Manual:
 
 ## Usage
 
+```
+Usage: seriallog [options] <SERIALPORT> <BAUDRATE>
+ OPTIONS:
+  -f | --tofile <PATH>  Write stdout into the file
+  -m | --mode <MODE>    Open serialport mode (r = ReadOnly, w = WriteOnly, rw = ReadWrite)
+  -h | --help   Display this page
+  -v | --version        Display the version of this program
+  -b | --buffersize <SIZE>      Buffer size to hold the string data (default: 1024)
+```
+
 ```bash
-seriallog -m r /dev/ttyUSB0 9600
+seriallog -b 2042 -m r /dev/ttyUSB0 9600
 ```

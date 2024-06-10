@@ -22,6 +22,7 @@ void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const 
     cmdline->buffersize = 1024;
     cmdline->filepath = NULL;
     cmdline->mode = 'r';
+    cmdline->serialport = NULL;
 
     for (int loopc = 1; loopc != argc; ++loopc)
     {

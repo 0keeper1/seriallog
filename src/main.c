@@ -9,7 +9,7 @@
 
 #define HELP                                                                                                                \
     "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
-    "-m | --mode <MODE>\tOpen serialport mode (r = ReadOnly, w = WroteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this "  \
+    "-m | --mode <MODE>\tOpen serialport mode (r = ReadOnly, w = WriteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this "  \
     "page\n  "                                                                                                              \
     "-v | --version\tDisplay the "                                                                                          \
     "version of this program\n  -b | --buffersize <SIZE>\tBuffer size to hold the string data (default: 1024)\nGithub: "    \
@@ -59,7 +59,17 @@ int main(int argc, const char *const argv[])
         return EXIT_FAILURE;
     }
 
-    printToStdOut(fd, cmdline.buffersize);
+    if (cmdline.filepath == NULL)
+    {
+        printToStdOut(fd, cmdline.buffersize);
+    }
+    else
+    {
+        if (printToFile(fd, cmdline.filepath, cmdline.buffersize) < 0)
+        {
+            puts("Error: Invalid path.");
+        }
+    }
 
     if (closeSerialPort(fd) < 0)
     {

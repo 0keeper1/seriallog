@@ -7,8 +7,8 @@ struct CommandLine
     unsigned char mode;
     int baudrate;
     int buffersize;
-    const char *serialport;
-    const char *filepath;
+    char *serialport;
+    char *filepath;
 };
 
-void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const cmdline);
+void parseCmdLine(int argc, char *argv[], struct CommandLine *const cmdline);

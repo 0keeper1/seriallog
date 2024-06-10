@@ -15,7 +15,7 @@ bool isFlag(const char *const argument)
     return argument[0] == '-' || (argument[0] == '-' && argument[1] == '-');
 }
 
-void parseCmdLine(int argc, const char *const argv[], struct CommandLine *const cmdline)
+void parseCmdLine(int argc, char *argv[], struct CommandLine *const cmdline)
 {
     cmdline->help = false;
     cmdline->version = false;

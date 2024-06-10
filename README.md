@@ -15,7 +15,7 @@ Manual:
 ## Usage
 
 ```
-Usage: seriallog [options] <SERIALPORT> <BAUDRATE>
+Usage: seriallog [options] <SERIALPORT | 'AUTO' | 'auto'> <BAUDRATE>
  OPTIONS:
   -f | --tofile <PATH>  Write stdout into the file
   -m | --mode <MODE>    Open serialport mode (r = ReadOnly, w = WriteOnly, rw = ReadWrite)
@@ -27,3 +27,6 @@ Usage: seriallog [options] <SERIALPORT> <BAUDRATE>
 ```bash
 seriallog -b 2042 -m r /dev/ttyUSB0 9600
 ```
+
+```bash
+seriallog -b 2042 AUTO

@@ -8,14 +8,16 @@
 #define VERSION "1.0.0"
 
 #define HELP                                                                                                                \
-    "Usage: seriallog [options] <SERIALPORT> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite stdout into the file\n  " \
+    "Usage: seriallog [options] <SERIALPORT | 'AUTO' | 'auto'> <BAUDRATE>\n OPTIONS:\n  -f | --tofile <PATH>\tWrite "       \
+    "stdout into "                                                                                                          \
+    "the file\n  "                                                                                                          \
     "-m | --mode <MODE>\tOpen serialport mode (r = ReadOnly, w = WriteOnly, rw = ReadWrite)\n  -h | --help\tDisplay this "  \
     "page\n  "                                                                                                              \
     "-v | --version\tDisplay the "                                                                                          \
     "version of this program\n  -b | --buffersize <SIZE>\tBuffer size to hold the string data (default: 1024)\nGithub: "    \
     "https://github.com/0keeper1/seriallog/"
 
-int main(int argc, const char *const argv[])
+int main(int argc, char *argv[])
 {
     int fd;
     short int mode = READONLY;
@@ -32,6 +34,15 @@ int main(int argc, const char *const argv[])
     {
         puts(VERSION);
         return EXIT_SUCCESS;
+    }
+
+    if (strncmp(cmdline.serialport, "auto", 4) == 0 || strncmp(cmdline.serialport, "AUTO", 4) == 0)
+    {
+        if (findSerialPortDevice(cmdline.serialport) < 0)
+        {
+            puts("Error: Failed to find serial port device.");
+            return EXIT_FAILURE;
+        }
     }
 
     if (validateSerialPort(cmdline.serialport) < 0)
